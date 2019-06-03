@@ -1,0 +1,57 @@
+body { 
+  background-image: url("/assets/images/reading.jpg")
+}
+
+.nyt-text {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.btn {
+  font-family: 'Times New Roman', Times, serif;
+  margin-bottom: 10px;
+}
+
+.card {
+  width: 36rem;
+  /* height: 20px; */
+}
+
+.card-header {
+  /* height: 100 px; */
+}
+#wrapper {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  /* padding-top: 5%; */
+  font-family: 'Times New Roman', Times, serif;
+}
+
+#articles {
+  display: inline-block;
+  overflow: auto;
+  width: 60%;
+  /* height: 700px; */
+}
+#notes {
+  float: right;
+  width: 30%;
+}
+textarea, input {
+  display: block;
+  width: 100%;
+  background-color: #FCF5C7;
+}
+input {
+  height: 36px;
+  font-size: 24px;
+}
+
+/* textarea {
+  height: 200px;
+  font-size: 18px;
+} */
+.scraped-title {
+  color: black;
+}
+
