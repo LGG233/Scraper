@@ -9,7 +9,6 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nytscraper";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 module.exports = function (app) {
-
     // A GET route for scraping the NYT website
     app.get("/scrape", function (req, res) {
         // Grab the body of the html with axios
@@ -20,13 +19,11 @@ module.exports = function (app) {
             $("article").each(function (i, element) {
                 // Save an empty result object
                 var result = [];
-
                 // Add the text and href of every link, and save them as properties of the result object
                 var headline = $(this).find("H2").text().trim();
-                console.log(headline);
                 var summary = $(this).find("p").text().trim();
                 if (summary === "") {
-                    summary = "*** No article summary provided ***";
+                    summary = "*** No article summary available ***";
                 }
                 var link = $(this).find("a").attr();
                 var newLink = "https://www.nytimes.com" + link.href;
@@ -35,9 +32,7 @@ module.exports = function (app) {
                     summary: summary,
                     link: newLink
                 };
-                console.log(post);
                 result.push(post);
-                // Save each item to the db
                 db.Article.create(result)
                     .then(function (dbArticle) {
                         // View the added result in the console
@@ -53,9 +48,10 @@ module.exports = function (app) {
         });
     });
 
-    // Route for getting Articles from the db
+    // Route for getting all Articles from the db
     app.get("/articles", function (req, res) {
         // Grab five documents from the Articles collection
+        // need to find a way to grab articles 0 - 4 on first load, then prepend 5-9, then 10-14, etc.
         db.Article.find({})
             .then(function (dbArticle) {
                 // If we were able to successfully find Articles, send them back to the client
@@ -70,9 +66,26 @@ module.exports = function (app) {
                     Articles: articleHolding
                 };
                 res.render("index", hbsObject)
+            })
+            .catch(function (err) {
+                // If an error occurred, send it to the client
+                res.json(err);
+            });
+    });
 
-                console.log(articleHolding);
-                console.log(hbsObject);
+    // Route for getting saved articles from the db
+    app.get("/savedArticles", function (req, res) {
+        // Grab five documents from the Articles collection
+        // need to find a way to grab articles 0 - 4 on first load, then prepend 5-9, then 10-14, etc.
+        db.Article.find({saved: true})
+            .then(function (dbArticle) {
+                // If we were able to successfully find Articles, send them back to the client
+                // res.json(dbArticle);
+                console.log(dbArticle);
+                hbsObject = {
+                    Articles: dbArticle
+                };
+                res.json(hbsObject)
             })
             .catch(function (err) {
                 // If an error occurred, send it to the client
@@ -82,13 +95,48 @@ module.exports = function (app) {
     });
 
     // Route for grabbing a specific Article by id, populate it with its note
-    app.get("/articles/:id", function (req, res) {
+    app.get("/articleNote/:id", function (req, res) {
         // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
         db.Article.findOne({ _id: req.params.id })
             // ..and populate all of the notes associated with it
             .populate("note")
             .then(function (dbArticle) {
                 // If we were able to successfully find an Article with the given id, send it back to the client
+                res.json(dbArticle);
+            })
+            .catch(function (err) {
+                // If an error occurred, send it to the client
+                res.json(err);
+            });
+    });
+    // Route for saving a specific Article by id
+    app.put("/articleSave/:id", function (req, res) {
+        // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+        db.Article.updateOne(
+            { _id: req.params.id },
+            { $set: { saved: true } }
+        )
+            .then(function (dbArticle) {
+                // If we were able to successfully find an Article with the given id, send it back to the client
+                console.log(dbArticle)
+                res.json(dbArticle);
+            })
+            .catch(function (err) {
+                // If an error occurred, send it to the client
+                res.json(err);
+            });
+    });
+
+    // Route for unsaving a specific Article by id
+    app.put("/articleUnsave/:id", function (req, res) {
+        // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+        db.Article.updateOne(
+            { _id: req.params.id },
+            { $set: { saved: false } }
+        )
+            .then(function (dbArticle) {
+                // If we were able to successfully find an Article with the given id, send it back to the client
+                console.log(dbArticle)
                 res.json(dbArticle);
             })
             .catch(function (err) {

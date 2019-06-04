@@ -1,31 +1,59 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en-US">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Scraping avec Mongoose</title>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Scraping For Fun (and Profit!)</title>
+
+    <link rel='icon' href='/assets/images/android-chrome-96x96.png' sizes="32x32" type='image/png'>
+    <!-- Bootstrap CSS file -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/scraper.css">
 
-    <style>
-    </style>
+    <!-- JS files: jQuery, Popper.js, Bootstrap JS -->
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+
+    <script src="assets/javascript/app.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="assets/css/scraper.css">
+
 </head>
 
 <body>
-    <div class="jumbotron banner text-center">
-        <h1 class="display-4">Le Journal Quotidien</h1>
-        <h4 classs="lead">On gratte, on gratte...</h4>
+    <div class="jumbotron banner nyt-text text-center ">
+        <h1 class="display-4">NY Times</h1>
+        <h4 classs="lead">Scrapen, Not Stirred...</h4>
+
     </div>
     <div class="container">
         <div id="wrapper">
-            <div id="articles"></div>
-            <div id="notes"></div>
-        </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type=stylesheet src="./css/scraper.css"></script>
-    <script src="app.js"></script>
+            <p id="home-page">Welcome to the New York Times Scraper</p>
+
+            <button type="button" id="scrape-articles" class="btn btn-light btn-sm">Scrape Articles</button>
+            <button type="button" id="load-articles" class="btn btn-light btn-sm">Load Articles</button>
+            <button type="button" id="clear-articles" class="btn btn-light btn-sm">Clear Articles</button>
+            <button type="button" id="saved-articles" class="btn btn-light btn-sm">Saved Articles</button>
+            <button type="button" id="go-home" class="btn btn-light btn-sm">Home</button>
+            <div id="scrape-success"></div>
+
 </body>
 
 </html>

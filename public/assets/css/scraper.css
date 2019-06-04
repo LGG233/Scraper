@@ -16,9 +16,10 @@ body {
   /* height: 20px; */
 }
 
-.card-header {
-  /* height: 100 px; */
+.summary-text {
+  color: black;
 }
+
 #wrapper {
   width: 960px;
   margin-left: auto;
@@ -55,3 +56,10 @@ input {
   color: black;
 }
 
+#home-page {
+  color: white;
+}
+
+#article-list {
+  color: white;
+}

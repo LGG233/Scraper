@@ -2,76 +2,36 @@
     <div class="jumbotron banner nyt-text text-center ">
         <h1 class="display-4">NY Times</h1>
         <h4 classs="lead">Scrapen, Not Stirred...</h4>
+
     </div>
     {{!-- <div class="row center-btns">
     </div> --}}
     <div class="container">
         <div id="wrapper">
-            <button type="button" class="scrape-articles btn btn-light btn-sm">Scrape Again</button>
-            <button type="button" class="clear-articles btn btn-light btn-sm">Clear Articles</button>
-            <button type="button" class="saved-articles btn btn-light btn-sm">Saved Articles</button>
-            <button type="button" class="go-home btn btn-light btn-sm">Home</button>
-            <div>
+            <button type="button" id="scrape-articles" class="btn btn-light btn-sm">Scrape Again</button>
+            <button type="button" id="load-articles" class="btn btn-light btn-sm">Load Articles</button>
+            <button type="button" id="clear-articles" class="btn btn-light btn-sm">Clear Articles</button>
+            <button type="button" id="saved-articles" class="btn btn-light btn-sm">Saved Articles</button>
+            <button type="button" id="go-home" class="btn btn-light btn-sm">Home</button>
+            <div id="article-list">
                 {{#each Articles}}
-                <div data-_id={{this._id}} class="card">
+                <div data-_id={{_id}} class="card">
                     <div class="card-header">
                         <h5>
-                            <button class="btn btn-outline-secondary save-artcle">Save Article</button>
+                            <button class="btn btn-outline-secondary save-article" data-id="{{_id}}">Save
+                                Article</button>
                             <a class="article-link scraped-title" target="_blank" rel="noopener noreferrer"
-                                href={{this.link}}>{{this.headline}}</a>
+                                href={{link}}>{{headline}}</a>
                         </h5>
-                        <p>{{this.summary}}</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="summary-text">{{summary}}</p>
                     </div>
                 </div>
                 {{/each}}
             </div>
         </div>
-
         <div id="articles"></div>
         <div id="notes"></div>
-
     </div>
-    </div>
-
-    <!-- Modal for Note -->
-    <div id="write-note-modal" class="modal fade" role="dialog" data-backdrop="static" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Notes for {{this.headline}}</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <h3>Notes for {{this.headline}}</h3>
-                        <input type="text" class="form-control" id="note-body" required>
-                    </div>
-                    <div class="form-group">
-                        <div data-_id={{this._id}} class="card">
-                            <div class="card-body">
-                                <h5>
-                                    <button class="btn btn-outline-secondary delete-note">Delete Note</button>
-                                    <a class="article-link scraped-title" target="_blank" rel="noopener noreferrer"
-                                        href={{this.link}}>{{this.headline}}</a>
-                                </h5>
-                                <p>{{this.summary}}</p>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="article-note" placeholder="What did you think?"
-                            required>
-                        <div class="invalid-feedback">
-                            Please your note
-                        </div>
-                    </div>
-                    <button id="save-note" type="submit" class="btn btn-secondary-outline btn">Save note</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 </body>
