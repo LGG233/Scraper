@@ -41,7 +41,7 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Routes
-require("./routes/apiRoutes")(app);
+require("./Routes/apiRoutes")(app);
 
 // Start the server
 app.listen(PORT, function () {
