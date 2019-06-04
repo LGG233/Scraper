@@ -4,8 +4,6 @@
         <h4 classs="lead">Scrapen, Not Stirred...</h4>
 
     </div>
-    {{!-- <div class="row center-btns">
-    </div> --}}
     <div class="container">
         <div id="wrapper">
             <button type="button" id="scrape-articles" class="btn btn-light btn-sm">Scrape Again</button>
@@ -18,16 +16,16 @@
                 {{#each Articles}}
                 <div data-_id={{_id}} class="card">
                     <div class="card-header">
-                        <h5>
+                        <h3>
                             <button class="btn btn-outline-secondary save-article" data-id="{{_id}}">Save
                                 Article</button>
                             <a class="article-link scraped-title" target="_blank" rel="noopener noreferrer"
                                 href={{link}}>{{headline}}</a>
-                        </h5>
-                    </div>
-                    <div class="card-body">
+                        </h3>
                         <p class="summary-text">{{summary}}</p>
                     </div>
+                    {{!-- <div class="card-body">
+                    </div> --}}
                 </div>
                 {{/each}}
             </div>

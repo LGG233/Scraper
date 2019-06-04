@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $("#note-input").hide();
     // buttons that contain api calls
     $('#scrape-articles').click(function () {
         console.log("scrape started");
@@ -26,7 +27,6 @@ $(document).ready(function () {
     $('.save-article').click(function () {
         event.preventDefault();
         var _id = $(this).data("id");
-        console.log(_id);
         $.ajax({
             headers: { "Content-type": "application/x-www-form-urlencoded" },
             url: "articleSave/" + _id,
@@ -54,10 +54,58 @@ $(document).ready(function () {
         })
     });
 
-    $('#save-note').click(function () {
+    $('.write-note').click(function () {
         event.preventDefault();
+        console.log("write note modal clicked");
+        var _id = $(this).data("id");
+        console.log(_id);
+        $.ajax({
+            headers: { "Content-type": "application/x-www-form-urlencoded" },
+            url: "articleNote/" + _id,
+            dataType: "json",
+            type: "GET"
+        })
+        .then(function(data){
+            console.log(data)
+            var headline = data.headline;
+            console.log(headline);
+            var summary = data.summary;
+            var _id = data._id;
+            $('#write-note-modal #modal-title').val("Notes for " + headline);
+            $('#write-note-modal #modal-summary').val(summary);
+            $('#write-note-model #data-id').val(_id)
+            $('#write-note-modal').modal('show');
+        })
     });
 
+    $('#save-note').click(function (_id) {
+        var _id = $(this).data("id");
+        console.log(_id);
+        event.preventDefault();
+        // Grab the id associated with the article from the submit button
+        // $('#write-note-modal').modal('hide');
+        // Run a POST request to change the note, using what's entered in the inputs
+        $.ajax({
+            method: "POST",
+            url: "articles/" + _id,
+            data: {
+                // Value taken from title input
+                title: $("#titleinput").val(),
+                // Value taken from note textarea
+                body: $("#bodyinput").val()
+            }
+        })
+        // With that done
+        .then(function(data) {
+            // Log the response
+            console.log(data);
+            // Empty the notes section
+            $("#titleinput").empty();
+            $("#bodyinput").empty();
+        });
+    });
+        
+        
     $('#delete-note').click(function () {
         event.preventDefault();
     });
@@ -77,11 +125,6 @@ $(document).ready(function () {
     $('#saved-articles').click(function () {
         event.preventDefault();
         window.location.assign("/savedArticles")
-    });
-
-    $('#write-note').click(function () {
-        event.preventDefault();
-        $('#write-note-modal').modal('show');
     });
 
     $('#go-home').click(function () {

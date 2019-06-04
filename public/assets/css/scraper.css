@@ -20,13 +20,26 @@ body {
   color: black;
 }
 
-#wrapper {
+#wrapper-index {
   width: 960px;
   margin-left: auto;
   margin-right: auto;
   /* padding-top: 5%; */
   font-family: 'Times New Roman', Times, serif;
   background-color: black;
+  color: white
+}
+
+/* .note-header {
+  display: none;
+} */
+
+#wrapper {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  /* padding-top: 5%; */
+  font-family: 'Times New Roman', Times, serif;
   color: white
 }
 
