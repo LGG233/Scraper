@@ -26,6 +26,8 @@ body {
   margin-right: auto;
   /* padding-top: 5%; */
   font-family: 'Times New Roman', Times, serif;
+  background-color: black;
+  color: white
 }
 
 #articles {
@@ -54,10 +56,6 @@ input {
 } */
 .scraped-title {
   color: black;
-}
-
-#home-page {
-  color: white;
 }
 
 #article-list {

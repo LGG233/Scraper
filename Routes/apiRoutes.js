@@ -43,16 +43,30 @@ module.exports = function (app) {
                         console.log(err);
                     });
             });
-            // Send a message to the client
             res.send("Scrape Complete");
+            // Send a message to the client
         });
     });
 
+    // clear all articles from database
+    app.get("/clearScrape", function (req, res) {
+        console.log(req.body)
+        db.Article.deleteMany({ saved:false})
+            .then(function (dbArticle) {
+                // res.json(dbArticle);
+                res.render("/");
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+        res.send(true)
+    });
     // Route for getting all Articles from the db
     app.get("/articles", function (req, res) {
         // Grab five documents from the Articles collection
         // need to find a way to grab articles 0 - 4 on first load, then prepend 5-9, then 10-14, etc.
-        db.Article.find({})
+        console.log("here's the starting point");
+        db.Article.find({ saved:false})
             .then(function (dbArticle) {
                 // If we were able to successfully find Articles, send them back to the client
                 // res.json(dbArticle);
@@ -65,6 +79,7 @@ module.exports = function (app) {
                 hbsObject = {
                     Articles: articleHolding
                 };
+                console.log(hbsObject);
                 res.render("index", hbsObject)
             })
             .catch(function (err) {
@@ -77,7 +92,7 @@ module.exports = function (app) {
     app.get("/savedArticles", function (req, res) {
         // Grab five documents from the Articles collection
         // need to find a way to grab articles 0 - 4 on first load, then prepend 5-9, then 10-14, etc.
-        db.Article.find({saved: true})
+        db.Article.find({ saved: true })
             .then(function (dbArticle) {
                 // If we were able to successfully find Articles, send them back to the client
                 // res.json(dbArticle);
@@ -85,7 +100,8 @@ module.exports = function (app) {
                 hbsObject = {
                     Articles: dbArticle
                 };
-                res.json(hbsObject)
+                res.render("saved", hbsObject)
+                // res.json(hbsObject)
             })
             .catch(function (err) {
                 // If an error occurred, send it to the client

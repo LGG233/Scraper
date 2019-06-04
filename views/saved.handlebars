@@ -7,11 +7,29 @@
     <div class="container">
         <div id="wrapper">
             <button type="button" id="scrape-articles" class="btn btn-light btn-sm">Scrape Again</button>
+            <button type="button" id="clear-scrape" class="btn btn-light btn-sm">Clear Old Scrape Results</button>
             <button type="button" id="load-articles" class="btn btn-light btn-sm">Load Articles</button>
             <button type="button" id="clear-articles" class="btn btn-light btn-sm">Clear Articles</button>
             <button type="button" id="saved-articles" class="btn btn-light btn-sm">Saved Articles</button>
             <button type="button" id="go-home" class="btn btn-light btn-sm">Home</button>
-            <div id="article-list"></div>
+            <div id="article-list">
+                                {{#each Articles}}
+                <div data-_id={{_id}} class="card">
+                    <div class="card-header">
+                        <h5>
+                            <button class="btn btn-outline-secondary remove-article" data-id="{{_id}}">Remove
+                                Article</button>
+                            <a class="article-link scraped-title" target="_blank" rel="noopener noreferrer"
+                                href={{link}}>{{headline}}</a>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="summary-text">{{summary}}</p>
+                    </div>
+                </div>
+                {{/each}}
+
+            </div>
         </div>
     </div>
     </div>

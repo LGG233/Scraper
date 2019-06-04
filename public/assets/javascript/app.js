@@ -1,15 +1,25 @@
 $(document).ready(function () {
+    // buttons that contain api calls
     $('#scrape-articles').click(function () {
+        console.log("scrape started");
         event.preventDefault();
         $.ajax({
             headers: { "Content-type": "application/x-www-form-urlencoded" },
             url: "scrape",
-            dataType: "json",
             type: "GET"
         }).then(function (response) {
-            $("#scrape-success").text("Scrape was successful. 'Load Articles' to begin.")
-            // console.log("this is the response from the back end:")
-            // console.log(response);
+            alert("Scrape was successful. 'Load Articles' to begin.")
+        })
+    });
+
+    $('#clear-scrape').click(function () {
+        event.preventDefault();
+        $.ajax({
+            headers: { "Content-type": "application/x-www-form-urlencoded" },
+            url: "clearScrape",
+            type: "GET"
+        }).then(function (response) {
+            alert("Click 'Scrape Again' to grab new headlines, then 'Load Articles' to see results.")
         })
     });
 
@@ -24,6 +34,7 @@ $(document).ready(function () {
             type: "PUT"
         }).then(function (response) {
             console.log(response);
+            window.location.assign("/articles")
         })
     });
 
@@ -39,47 +50,33 @@ $(document).ready(function () {
             type: "PUT"
         }).then(function (response) {
             console.log(response);
-            getSaved();
+            window.location.assign("/savedArticles")
         })
-    });
-
-    $('#clear-articles').click(function () {
-        event.preventDefault();
-        $("#article-list").empty();
-        $("#article-list").html("<h3>Load more articles to continue...</h3>");
-    });
-
-    $('#load-articles').click(function () {
-        // var articlesShown = $(this).data("totalArticles "); - how to load more when div is not cleared?
-        event.preventDefault();
-        $.ajax({
-            headers: { "Content-type": "application/x-www-form-urlencoded" },
-            url: "articles/",
-            dataType: "json",
-            type: "GET"
-        }).then(function (response) {
-            console.log("this is the response from the back end:")
-            console.log(response);
-        });
     });
 
     $('#save-note').click(function () {
         event.preventDefault();
-        $('#write-note-modal').modal('show');
     });
 
     $('#delete-note').click(function () {
         event.preventDefault();
     });
 
-    $('#saved-articles').click(function () {
+    // buttons that call new views
+    $('#clear-articles').click(function () {
         event.preventDefault();
-        getSaved();
+        $("#article-list").empty();
+        $("#article-list").html("<h1>Load more articles to continue...</h1>");
     });
 
-    $('#go-home').click(function () {
-        // should this just be a link to the home page? What is on the "home" page?
+    $('#load-articles').click(function () {
         event.preventDefault();
+        window.location.assign("/articles")
+    });
+
+    $('#saved-articles').click(function () {
+        event.preventDefault();
+        window.location.assign("/savedArticles")
     });
 
     $('#write-note').click(function () {
@@ -87,37 +84,11 @@ $(document).ready(function () {
         $('#write-note-modal').modal('show');
     });
 
+    $('#go-home').click(function () {
+        event.preventDefault();
+        window.location.assign("/")
+    });
+
     // will also need a button attached to each note that allows deletion of specific note
 });
 
-function getSaved() {
-    $("#article-list").empty();
-    $.ajax({
-        headers: { "Content-type": "application/x-www-form-urlencoded" },
-        url: "savedArticles/",
-        dataType: "json",
-        type: "GET"
-    }).then(function (response) {
-        for (i = 0; i < response.Articles.length; i++) {
-            console.log("this is the number of saved articles: " + response.Articles.length)
-            var headline = response.Articles[i].headline;
-            var link = response.Articles[i].link;
-            var summary = response.Articles[i].summary;
-            var id = response.Articles[i]._id;
-            console.log("Headline: " + headline);
-            console.log("link: " + link);
-            console.log("Summary: " + summary);
-            console.log("ID: " + id);
-            var articleDiv = $("<div class='card-header'>");
-            var removeButton = $("<button class='btn btn-outline-secondary remove-article' data-id='" + id + "'>").text("Remove Article");
-            var artHeadline = $("<h5>").html(headline);
-            var artLink = $("<a href='" + link + "'>").html(artHeadline);
-            var artSummary = $("<p class='card-body summary-text'>").html(summary);
-            articleDiv.append(removeButton);
-            articleDiv.append(artLink);
-            articleDiv.append(artSummary);
-            var articleWrapper = $("<div class='card'>").html(articleDiv);
-            $("#article-list").append(articleWrapper);
-        }
-    })
-};
