@@ -13,7 +13,9 @@ var cheerio = require("cheerio");
 // Require all models
 var db = require("./models");
 
-var PORT = process.env.PORT || 3000;
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nytscraper";
+
+mongoose.connect(MONGODB_URI);
 
 // Initialize Express
 var app = express();
