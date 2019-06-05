@@ -13,8 +13,8 @@ var cheerio = require("cheerio");
 // Require all models
 var db = require("./models");
 
+var PORT = process.env.PORT || 3000;
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nytscraper";
-
 mongoose.connect(MONGODB_URI);
 
 // Initialize Express
@@ -30,8 +30,8 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
-// Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/nytscraper", { useNewUrlParser: true });
+// // Connect to the Mongo DB
+// mongoose.connect("mongodb://localhost/nytscraper", { useNewUrlParser: true });
 
 // Handlebars
 app.engine(
@@ -47,5 +47,5 @@ require("./Routes/apiRoutes")(app);
 
 // Start the server
 app.listen(PORT, function () {
-    console.log("App running on port " + PORT + "!");
+    // console.log("App running on port " + PORT + "!");
 });
